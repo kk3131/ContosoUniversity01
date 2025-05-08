@@ -4,6 +4,7 @@ using System;
 using System.Linq; // << 必加這個
 namespace ContosoUniversity.Data
 {
+    //Instructors Departments
     public class DbInitializer
     {
         public static void Initialize(SchoolContext context)
@@ -14,6 +15,8 @@ namespace ContosoUniversity.Data
             {
                 return; // DB has been seeded
             }
+
+            
 
             var students = new Student[]
             {
