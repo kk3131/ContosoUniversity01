@@ -15,8 +15,28 @@ namespace ContosoUniversity.Data
             {
                 return; // DB has been seeded
             }
+            var departments = new Department[]
+            {
+                new Department{Name="Coomputer Science",Budget=50000,StartDate=DateTime.Parse("2025-05-06")},
+                new Department{Name="Mathematics",Budget=30000,StartDate=DateTime.Parse("2025-05-06")},
+                new Department{Name="Phsics",Budget=40000,StartDate=DateTime.Parse("2025-05-06")}
+            };
+            foreach (Department d in departments)
+            {
+                context.Department.Add(d);
+            }
+            context.SaveChanges();
 
-            
+            var instructors = new Instructor[]
+           {
+                new Instructor { FirstMidName = "John", LastName = "Smith", HireDate = DateTime.Parse("2020-09-15") },
+                new Instructor { FirstMidName = "Jane", LastName = "Johnson", HireDate = DateTime.Parse("2019-03-01") }
+           };
+            foreach (Instructor i in instructors)
+            {
+                context.Instructor.Add(i);
+            }
+            context.SaveChanges();
 
             var students = new Student[]
             {

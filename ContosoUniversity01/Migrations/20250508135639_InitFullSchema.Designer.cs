@@ -4,6 +4,7 @@ using ContosoUniversity01.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ContosoUniversity01.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    partial class SchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20250508135639_InitFullSchema")]
+    partial class InitFullSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,11 +60,11 @@ namespace ContosoUniversity01.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentID"));
 
+                    b.Property<int?>("AdministratorInstructorId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Budget")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("InstructorID")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -73,7 +76,7 @@ namespace ContosoUniversity01.Migrations
 
                     b.HasKey("DepartmentID");
 
-                    b.HasIndex("InstructorID");
+                    b.HasIndex("AdministratorInstructorId");
 
                     b.ToTable("Department");
                 });
@@ -106,11 +109,11 @@ namespace ContosoUniversity01.Migrations
 
             modelBuilder.Entity("ContosoUniversity01.Models.Instructor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("InstructorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstructorId"));
 
                     b.Property<string>("FirstMidName")
                         .IsRequired()
@@ -123,7 +126,7 @@ namespace ContosoUniversity01.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("InstructorId");
 
                     b.ToTable("Instructor");
                 });
@@ -167,7 +170,7 @@ namespace ContosoUniversity01.Migrations
                 {
                     b.HasOne("ContosoUniversity01.Models.Instructor", "Administrator")
                         .WithMany()
-                        .HasForeignKey("InstructorID");
+                        .HasForeignKey("AdministratorInstructorId");
 
                     b.Navigation("Administrator");
                 });

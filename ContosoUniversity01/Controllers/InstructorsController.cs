@@ -34,7 +34,7 @@ namespace ContosoUniversity01.Controllers
             }
 
             var instructor = await _context.Instructor
-                .FirstOrDefaultAsync(m => m.InstructorId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (instructor == null)
             {
                 return NotFound();
@@ -88,7 +88,7 @@ namespace ContosoUniversity01.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("InstructorId,LastName,FirstMidName,HireDate")] Instructor instructor)
         {
-            if (id != instructor.InstructorId)
+            if (id != instructor.Id)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace ContosoUniversity01.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!InstructorExists(instructor.InstructorId))
+                    if (!InstructorExists(instructor.Id))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace ContosoUniversity01.Controllers
             }
 
             var instructor = await _context.Instructor
-                .FirstOrDefaultAsync(m => m.InstructorId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (instructor == null)
             {
                 return NotFound();
@@ -151,7 +151,7 @@ namespace ContosoUniversity01.Controllers
 
         private bool InstructorExists(int id)
         {
-            return _context.Instructor.Any(e => e.InstructorId == id);
+            return _context.Instructor.Any(e => e.Id == id);
         }
     }
 }

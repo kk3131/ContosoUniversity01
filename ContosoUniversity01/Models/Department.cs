@@ -14,6 +14,7 @@ namespace ContosoUniversity01.Models
 
         public DateTime StartDate { get; set; }
 
+        public int? InstructorID { get; set; }
 
         public Instructor? Administrator { get; set; }
 

@@ -2,7 +2,7 @@
 {
     public class Instructor
     {
-        public int InstructorId { get; set; }
+        public int Id { get; set; }
         public string LastName { get; set; } = string.Empty;
         public string FirstMidName { get; set; } = string.Empty;
 
