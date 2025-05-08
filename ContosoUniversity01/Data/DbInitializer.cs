@@ -17,7 +17,7 @@ namespace ContosoUniversity.Data
             }
             var departments = new Department[]
             {
-                new Department{Name="Coomputer Science",Budget=50000,StartDate=DateTime.Parse("2025-05-06")},
+                new Department{Name="Coomputer Science",Budget=50000,StartDate=DateTime.Parse("2025-05-06"),},
                 new Department{Name="Mathematics",Budget=30000,StartDate=DateTime.Parse("2025-05-06")},
                 new Department{Name="Phsics",Budget=40000,StartDate=DateTime.Parse("2025-05-06")}
             };

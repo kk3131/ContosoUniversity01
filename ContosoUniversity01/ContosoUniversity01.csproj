@@ -9,6 +9,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20250508135639_InitFullSchema.cs" />
     <Compile Remove="Migrations\20250508135639_InitFullSchema.Designer.cs" />
+    <Compile Remove="Migrations\20250508145034_InitWithDepartment.cs" />
+    <Compile Remove="Migrations\20250508145034_InitWithDepartment.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
