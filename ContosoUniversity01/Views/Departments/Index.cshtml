@@ -40,8 +40,12 @@
                 @Html.DisplayFor(modelItem => item.StartDate)
             </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Administrator)
+                    @(item.Administrator != null ? item.Administrator.FullName : "（無）")
                 </td>
+
+
+
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.DepartmentID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.DepartmentID">Details</a> |

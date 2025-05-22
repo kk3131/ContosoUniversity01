@@ -68,7 +68,9 @@ namespace ContosoUniversity01.Migrations
 
                     b.HasKey("DepartmentID");
 
-                    b.HasIndex("InstructorID");
+                    b.HasIndex("InstructorID")
+                        .IsUnique()
+                        .HasFilter("[InstructorID] IS NOT NULL");
 
                     b.ToTable("Department");
                 });
@@ -120,7 +122,7 @@ namespace ContosoUniversity01.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Instructor");
+                    b.ToTable("Instructors");
                 });
 
             modelBuilder.Entity("ContosoUniversity01.Models.Student", b =>
@@ -172,8 +174,8 @@ namespace ContosoUniversity01.Migrations
             modelBuilder.Entity("ContosoUniversity01.Models.Department", b =>
                 {
                     b.HasOne("ContosoUniversity01.Models.Instructor", "Administrator")
-                        .WithMany()
-                        .HasForeignKey("InstructorID");
+                        .WithOne("DepartmentAsAdministrator")
+                        .HasForeignKey("ContosoUniversity01.Models.Department", "InstructorID");
 
                     b.Navigation("Administrator");
                 });
@@ -220,6 +222,11 @@ namespace ContosoUniversity01.Migrations
             modelBuilder.Entity("ContosoUniversity01.Models.Department", b =>
                 {
                     b.Navigation("Courses");
+                });
+
+            modelBuilder.Entity("ContosoUniversity01.Models.Instructor", b =>
+                {
+                    b.Navigation("DepartmentAsAdministrator");
                 });
 
             modelBuilder.Entity("ContosoUniversity01.Models.Student", b =>

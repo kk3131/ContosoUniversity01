@@ -22,7 +22,7 @@ namespace ContosoUniversity01.Controllers
         // GET: Instructors
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Instructor.ToListAsync());
+            return View(await _context.Instructors.ToListAsync());
         }
 
         // GET: Instructors/Details/5
@@ -33,7 +33,7 @@ namespace ContosoUniversity01.Controllers
                 return NotFound();
             }
 
-            var instructor = await _context.Instructor
+            var instructor = await _context.Instructors
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (instructor == null)
             {
@@ -73,7 +73,7 @@ namespace ContosoUniversity01.Controllers
                 return NotFound();
             }
 
-            var instructor = await _context.Instructor.FindAsync(id);
+            var instructor = await _context.Instructors.FindAsync(id);
             if (instructor == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace ContosoUniversity01.Controllers
                 return NotFound();
             }
 
-            var instructor = await _context.Instructor
+            var instructor = await _context.Instructors
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (instructor == null)
             {
@@ -139,10 +139,10 @@ namespace ContosoUniversity01.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var instructor = await _context.Instructor.FindAsync(id);
+            var instructor = await _context.Instructors.FindAsync(id);
             if (instructor != null)
             {
-                _context.Instructor.Remove(instructor);
+                _context.Instructors.Remove(instructor);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace ContosoUniversity01.Controllers
 
         private bool InstructorExists(int id)
         {
-            return _context.Instructor.Any(e => e.Id == id);
+            return _context.Instructors.Any(e => e.Id == id);
         }
     }
 }

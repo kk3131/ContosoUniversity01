@@ -34,7 +34,7 @@ namespace ContosoUniversity.Data
            };
             foreach (Instructor i in instructors)
             {
-                context.Instructor.Add(i);
+                context.Instructors.Add(i);
             }
             context.SaveChanges();
 
