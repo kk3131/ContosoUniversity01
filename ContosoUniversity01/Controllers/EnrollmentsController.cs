@@ -22,7 +22,9 @@ namespace ContosoUniversity01.Controllers
         // GET: Enrollments
         public async Task<IActionResult> Index()
         {
-            var schoolContext = _context.Enrollments.Include(e => e.Course).Include(e => e.Student);
+            var schoolContext = _context.Enrollments
+                .Include(e => e.Course)
+                .Include(e => e.Student);
             return View(await schoolContext.ToListAsync());
         }
 
@@ -85,8 +87,8 @@ namespace ContosoUniversity01.Controllers
             {
                 return NotFound();
             }
-            ViewData["CourseID"] = new SelectList(_context.Courses, "CourseID", "CourseID", enrollment.CourseID);
-            ViewData["StudentID"] = new SelectList(_context.Students, "Id", "Id", enrollment.StudentID);
+            ViewData["CourseID"] = new SelectList(_context.Courses, "CourseID", "Title", enrollment.CourseID);
+            ViewData["StudentID"] = new SelectList(_context.Students, "Id", "LastName", enrollment.StudentID);
             return View(enrollment);
         }
 
@@ -102,8 +104,21 @@ namespace ContosoUniversity01.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+
+                foreach (var entry in ModelState)
+                {
+                    foreach (var error in entry.Value.Errors)
+                    {
+                        Console.WriteLine($"欄位 {entry.Key} 錯誤：{error.ErrorMessage}");
+                    }
+                }
+
+                //_context.Update(enrollment);
+                //await _context.SaveChangesAsync();
+                //return RedirectToAction(nameof(Index));
+
                 try
                 {
                     _context.Update(enrollment);
@@ -112,20 +127,20 @@ namespace ContosoUniversity01.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!EnrollmentExists(enrollment.EnrollmentID))
-                    {
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
+
             }
-            ViewData["CourseID"] = new SelectList(_context.Courses, "CourseID", "CourseID", enrollment.CourseID);
-            ViewData["StudentID"] = new SelectList(_context.Students, "Id", "Id", enrollment.StudentID);
+
+            ViewData["CourseID"] = new SelectList(_context.Courses, "CourseID", "Title", enrollment.CourseID);
+            ViewData["StudentID"] = new SelectList(_context.Students, "Id", "LastName", enrollment.StudentID);
             return View(enrollment);
         }
+
+
 
         // GET: Enrollments/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -156,9 +171,10 @@ namespace ContosoUniversity01.Controllers
             if (enrollment != null)
             {
                 _context.Enrollments.Remove(enrollment);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
