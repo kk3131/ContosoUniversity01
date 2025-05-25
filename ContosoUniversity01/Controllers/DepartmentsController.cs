@@ -25,7 +25,6 @@ namespace ContosoUniversity01.Controllers
             var departments = _context.Department
                 .Include(d => d.Administrator); // 把 Instructor 也載入進來
             return View(await departments.ToListAsync());
-
         }
 
         // GET: Departments/Details/5
@@ -55,8 +54,6 @@ namespace ContosoUniversity01.Controllers
         }
 
         // POST: Departments/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DepartmentID,Name,Budget,StartDate,InstructorID")] Department department)
@@ -71,20 +68,6 @@ namespace ContosoUniversity01.Controllers
         }
 
         // GET: Departments/Edit/5
-        private void PopulateInstructorsDropDownList(object? selectedInstructor = null)
-        {
-            var instructorsQuery = from i in _context.Instructors
-                                   orderby i.Id
-                                   select new
-                                   {
-                                       ID = i.Id,
-                                       IDText = i.Id + " - " + i.FirstMidName + " " + i.LastName
-                                   };
-
-            ViewBag.InstructorID = new SelectList(instructorsQuery, "ID", "IDText", selectedInstructor);
-        }
-
-
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -102,8 +85,6 @@ namespace ContosoUniversity01.Controllers
         }
 
         // POST: Departments/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("DepartmentID,Name,Budget,StartDate,InstructorID")] Department department)
@@ -172,6 +153,23 @@ namespace ContosoUniversity01.Controllers
         private bool DepartmentExists(int id)
         {
             return _context.Department.Any(e => e.DepartmentID == id);
+        }
+
+        private void PopulateInstructorsDropDownList(object? selectedInstructor = null)
+        {
+            var instructorsQuery = from i in _context.Instructors
+                                   orderby i.Id
+                                   select new
+                                   {
+                                       ID = i.Id,
+                                       IDText = i.Id + " - " + i.FirstMidName + " " + i.LastName
+                                   };
+
+            // 建立 SelectList 並添加預設「(無)」選項
+            var selectList = new SelectList(instructorsQuery, "ID", "IDText", selectedInstructor)
+                .Prepend(new SelectListItem { Text = "(無)", Value = "" });
+
+            ViewBag.InstructorID = selectList;
         }
     }
 }
