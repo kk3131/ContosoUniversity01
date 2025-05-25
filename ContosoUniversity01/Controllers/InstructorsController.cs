@@ -54,7 +54,7 @@ namespace ContosoUniversity01.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("InstructorId,LastName,FirstMidName,HireDate")] Instructor instructor)
+        public async Task<IActionResult> Create([Bind("Id,LastName,FirstMidName,HireDate")] Instructor instructor)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace ContosoUniversity01.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("InstructorId,LastName,FirstMidName,HireDate")] Instructor instructor)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,LastName,FirstMidName,HireDate")] Instructor instructor)
         {
             if (id != instructor.Id)
             {
