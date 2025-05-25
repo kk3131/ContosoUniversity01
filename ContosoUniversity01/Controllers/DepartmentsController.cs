@@ -98,6 +98,18 @@ namespace ContosoUniversity01.Controllers
             {
                 try
                 {
+
+                    // 檢查是否已有其他系使用相同的 InstructorID
+                    if (department.InstructorID.HasValue &&
+                        _context.Department.Any(d =>
+                            d.DepartmentID != department.DepartmentID &&
+                            d.InstructorID == department.InstructorID))
+                    {
+                        ModelState.AddModelError("InstructorID", "該講師已經是其他系的系主任");
+                        PopulateInstructorsDropDownList(department.InstructorID);
+                        return View(department);
+                    }
+
                     _context.Update(department);
                     await _context.SaveChangesAsync();
                 }
